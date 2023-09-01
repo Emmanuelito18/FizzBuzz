@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <locale.h>
 
 #define color SetConsoleTextAttribute
 ///////////////////////////////
@@ -44,7 +45,10 @@ no hay necesidad de pasar paramentros a los métodos que pertenecen a la misma cl
 
 /////////////////////////////////////
 //prototipado de funciones
-
+bool moduloManual(int,int);
+void FizzBuzzSimple(void);
+void FizzBuzzManual(void);
+void menu(void);
 ////////////////////////////////////
 
 /////////////////////////////////////////
@@ -57,7 +61,10 @@ no hay necesidad de pasar paramentros a los métodos que pertenecen a la misma cl
 int main(){
 	/////////////////////////////
 	//inicio del programa
-	cout<<"Este programa "<<endl;
+	setlocale(LC_ALL,"spanish");
+	cout<<"Este programa muestra una lista de números del 1 al 100, y si son multiplos de 3 muestra"<<endl;
+	cout<<"la palabra fizz, pero si es multiplo de 5 muestra la palabra buzz, pero si es multiplo de 3 y 5"<<endl;
+	cout<<"muestra la palabra fizzbuzz, y si no es multiplo de nada solamente muestra el número"<<endl;
 	cout<<"Creado por: Mej¡a Casta¤eda Bryan Emmanuel"<<endl;
 	cout<<"Recuerda que s¡ puedes imaginarlo, puedes programarlo."<<endl<<endl;
 	/////////////////////////////
@@ -99,6 +106,33 @@ int main(){
 	
 	//////////////////////////////
 	//Cuerpo del programa
+	menu();
+	//////////////////////////////
+	
+	//////////////////////////////
+	//parte final del código
+	cout<<"Esta es la parte final del programa"<<endl;
+	cout<<"Que la fuerza de velocidad te acompa¤e"<<endl<<endl;	
+	#ifdef _WIN32
+	system("pause");
+	#else
+	getch();
+	#endif
+	return 0;
+	//////////////////////////////
+}
+//fin del código principal del programa
+//////////////////////////////
+
+//////////////////////////////////////////
+//definición de funciones
+bool moduloManual(int dividendo,int divisor) {
+	int resultado=0,cociente=0;
+	resultado=dividendo/divisor;
+	cociente=dividendo-(resultado*divisor);
+	return cociente==0? true:false;
+}
+void FizzBuzzSimple(){
 	HANDLE consola=GetStdHandle(STD_OUTPUT_HANDLE);
 	for(int i=1;i<=100;i++){
 		if(i%3==0&&i%5==0){
@@ -119,26 +153,51 @@ int main(){
 			}
 		}
 	}
-	//////////////////////////////
-	
-	//////////////////////////////
-	//parte final del código
-	cout<<"Esta es la parte final del programa"<<endl;
-	cout<<"Que la fuerza de velocidad te acompa¤e"<<endl<<endl;	
-	#ifdef _WIN32
-	system("pause");
-	#else
-	getch();
-	#endif
-	return 0;
-	//////////////////////////////
 }
-//fin del código principal del programa
-//////////////////////////////
-
-//////////////////////////////////////////
-//definición de funciones
-
+void FizzBuzzManual(){
+	HANDLE consola=GetStdHandle(STD_OUTPUT_HANDLE);
+	for(int i=1;i<=100;i++){
+		if(moduloManual(i,3)&&moduloManual(i,5)){
+			color(consola,10);
+			cout<<"FizzBuzz"<<endl;
+			color(consola,7);
+		}else{
+			if(moduloManual(i,3)){
+				color(consola,6);
+				cout<<"Fizz"<<endl;
+				color(consola,7);
+			}else if(moduloManual(i,5)){
+				color(consola,9);
+				cout<<"Buzz"<<endl;
+				color(consola,7);
+			}else{
+				cout<<i<<endl;
+			}
+		}
+	}
+}
+void menu(){
+	int opc=0;
+	do{
+		cout<<"\t\tMenu"<<endl;
+		cout<<"1.FizzBuzz simple"<<endl;
+		cout<<"2.FizzBuzz manual"<<endl;
+		cout<<"3.Salir"<<endl<<endl;
+		cin>>opc;
+		switch(opc){
+			case 1:
+				system("cls");
+				cout<<"FizzBuzz utilizando operador modulo"<<endl;
+				FizzBuzzSimple();
+				break;
+			case 2:
+				system("cls");
+				cout<<"FizzBuzz con modulo manual"<<endl;
+				FizzBuzzManual();
+				break;
+		}
+	}while(opc!=3);
+}
 /////////////////////////////////////////
 
 ////////////////////////////////
